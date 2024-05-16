@@ -1,11 +1,11 @@
 -- apagando bd se existir
-drop database dbLoja;
+drop database dbLojaDF02;
 
 -- criando bd
-create database dbLoja;
+create database dbLojaDF02;
 
 -- acessando bd
-use dbLoja;
+use dbLojaDF02;
 
 -- visualizando banco de dados
 show databases;
@@ -28,7 +28,7 @@ estado char(2),
 primary key(codFunc)
 );
 
-create table tbFornecedor(
+create table tbFornecedores(
 	codForn int not null auto_increment,
 	nome varchar(100),
 	email varchar(100),
@@ -45,9 +45,9 @@ create table tbClientes(
 );
 
 create table tbUsuarios(
-codUsu int auto_increment,
-nome varchar(50),
-senha varchar(20),
+codUsu int not null auto_increment,
+nome varchar(50) not null,
+senha varchar(20) not null,
 codFunc int not null,
 primary key(codUsu),
 foreign key(codFunc) references tbFuncionarios(codFunc) 
@@ -65,6 +65,22 @@ create table tbProdutos(
 	foreign key(codForn) references tbFornecedores(codForn)
 );
 
+create table tbVendas(
+codVend Int not null auto_increment,
+valor decimal (9,2),
+data date,
+hora time,
+quantidade int,
+codUsu int not null,
+codProd int not null,
+codCli int not null,
+primary key(codVend),
+foreign key(codUsu) references tbUsuarios(codUsu),
+foreign key(codProd) references tbProdutos(codProd),
+foreign key(codCli) references tbClientes(codCli)
+
+);
+
 
 
 
@@ -74,6 +90,11 @@ show tables;
 -- visualizando as estruturas das tabelas
 describe tbUsuarios;
 desc tbFuncionarios;
+desc tbClientes;
+desc tbUsuarios;
+desc tbProdutos;
+desc tbVendas;
+desc tbFornecedores;
 
 
 -- inserindo registros nas tabelas
